@@ -1,0 +1,23 @@
+services:
+  mapproxy:
+    build:
+      context: .
+    environment:
+      - LOG_LEVEL=DEBUG
+      - TELEMETRY_TRACING_ENABLED=True
+      # - TELEMETRY_SAMPLING_RATIO_DENOMINATOR=1
+    ports:
+      - 8080:80
+    volumes:
+      - ${PWD}/config/mapproxy/mapproxy.example.yaml:/mapproxy/config/mapproxy.yaml
+  uwsgi-exporter:
+    image: timonwong/uwsgi-exporter
+    ports: 
+      - 9117:9117
+    command: ["--stats.uri", "custom-mapproxy-mapproxy-1:1717", "--log.level", "debug"]
+    depends_on:
+      - mapproxy
+
+networks:
+  backend:
+    name: mapproxy
