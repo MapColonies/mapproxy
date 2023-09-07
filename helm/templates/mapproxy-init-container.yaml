@@ -39,6 +39,10 @@
                   name: {{ .postgresSecretName }}
                   key: password                        
             {{- end }}
+            {{- if .Values.rasterCommon.ca.secretName }}
+            - name: REQUESTS_CA_BUNDLE
+              value: '/usr/local/share/ca-certificates/ca.crt'
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .releaseName }}-init-configmap
@@ -66,10 +70,6 @@
             - mountPath: /configSource/mapproxy.yaml
               name: sources-storage
               subPath: config/mapproxy.yaml
-            {{- end }}
-            {{- if .Values.authentication.ca.enabled }}
-            - name: REQUESTS_CA_BUNDLE
-              value: '/usr/local/share/ca-certificates/ca.crt'
             {{- end }}
           ports:
           - name: http

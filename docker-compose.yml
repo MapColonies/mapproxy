@@ -3,9 +3,7 @@ services:
     build:
       context: .
     environment:
-      - LOG_LEVEL=DEBUG
-      - TELEMETRY_TRACING_ENABLED=True
-      # - TELEMETRY_SAMPLING_RATIO_DENOMINATOR=1
+      - LOG_LEVEL=INFO
     ports:
       - 8080:80
     volumes:

@@ -16,7 +16,7 @@ class Telemetry():
         self.app = app
         # Get telemetry endpoint from env
         endpoint = environ.get('TELEMETRY_ENDPOINT', 'localhost:4317')
-        sampling_ratio_denominator = int(environ.get('TELEMETRY_SAMPLING_RATIO_DENOMINATOR', '1000'))
+        sampling_ratio_denominator = int(environ.get('TELEMETRY_TRACING_SAMPLING_RATIO_DENOMINATOR', '1000'))
 
         # Create span exporter
         span_exporter = OTLPSpanExporter(endpoint=endpoint, insecure=True)

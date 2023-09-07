@@ -14,10 +14,11 @@ with open('./log.yaml', 'r') as log_config_file:
 dictConfig(log_config)
 
 tracing_enabled = environ.get('TELEMETRY_TRACING_ENABLED', 'false')
+metrics_enabled = environ.get('TELEMETRY_METRICS_ENABLED', 'false')
 
 mapproxy_conf = f'{join(dirname(__file__), "config", "mapproxy.yaml")}'
 
 application = make_wsgi_app(mapproxy_conf)
-application = Metrics(application)
+application = Metrics(application) if metrics_enabled.strip().lower() == 'true' else application
 application = Logs(application)
-application = Telemetry(application) if tracing_enabled.strip().lower() == 'true' else application
+application = Telemetry(application) if tracing_enabled.strip().lower() == 'true' else application # TODO: check

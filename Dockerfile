@@ -14,11 +14,12 @@ ENV \
     PROCESSES=6 \
     THREADS=10 \
     # Telemetry
-    TELEMETRY_TRACING_ENABLED='true' \
+    TELEMETRY_TRACING_ENABLED='false' \
     TELEMETRY_ENDPOINT='localhost:4317' \
+    TELEMETRY_METRICS_ENABLED='false' \
     OTEL_RESOURCE_ATTRIBUTES='service.name=mapcolonies,application=mapproxy' \
     OTEL_SERVICE_NAME='mapproxy' \
-    TELEMETRY_SAMPLING_RATIO_DENOMINATOR=1000
+    TELEMETRY_TRACING_SAMPLING_RATIO_DENOMINATOR=1000
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
