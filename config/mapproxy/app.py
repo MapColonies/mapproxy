@@ -19,6 +19,6 @@ metrics_enabled = environ.get('TELEMETRY_METRICS_ENABLED', 'false')
 mapproxy_conf = f'{join(dirname(__file__), "config", "mapproxy.yaml")}'
 
 application = make_wsgi_app(mapproxy_conf)
-application = Metrics(application) if metrics_enabled.strip().lower() == 'true' else application
 application = Logs(application)
+application = Metrics(application) if metrics_enabled.strip().lower() == 'true' else application
 application = Telemetry(application) if tracing_enabled.strip().lower() == 'true' else application # TODO: check
