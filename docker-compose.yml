@@ -4,6 +4,8 @@ services:
       context: .
     environment:
       - LOG_LEVEL=INFO
+      - TELEMETRY_TRACING_ENABLED=false
+      - TELEMETRY_METRICS_ENABLED=false
     ports:
       - 8080:80
     volumes:
