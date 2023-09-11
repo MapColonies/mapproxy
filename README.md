@@ -1,6 +1,6 @@
 # mapproxy
 
-This custom mapproxy repo manages deployment configurations and a docker image, based on the official mapproxy image.
+This custom mapproxy repo manages deployment configurations and a docker image build instructions, based on the official mapproxy image. This repo holds as well configurations for nginx, as a web server before the mapproxy app. The app itself is built from WSGI (uWSGI) and the mapproxy web app. For our use case we chose to use the base image of mapproxy as the source for this app image. This might change in the future as the other flavors evolve.
 
 
 ## Environment Variables
@@ -24,13 +24,13 @@ Go to the project directory
 
 Change volume to point to a mapproxy configuration file in [docker-compose.yml](docker-compose.yml)
 
-Start the server and uwsgi metrics exporter
+Start the mapproxy app
 
 ```bash
   docker compose up --build
 ```
 
-Stop the server
+Stop the app
 
 ```bash
   docker compose down

@@ -16,7 +16,7 @@ services:
       - ./config/app/log.default.yaml:/mapproxy/log.default.yaml
   nginx:
     container_name: nginx
-    image: nginx:1.13
+    image: nginx:1.25
     volumes:
       - ./config/nginx/nginx.default.conf:/etc/nginx/nginx.conf:ro
     logging:
@@ -30,10 +30,10 @@ services:
     - 80:80
   uwsgi-exporter:
     container_name: uwsgi-exporter
-    image: timonwong/uwsgi-exporter
+    image: timonwong/uwsgi-exporter:v1.3.0
     ports: 
       - 9117:9117
-    command: ["--stats.uri", "custom-mapproxy-mapproxy-1:1717", "--log.level", "debug"]
+    command: ["--stats.uri", "mapproxy:1717", "--log.level", "debug"]
     depends_on:
       - mapproxy
 

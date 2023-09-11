@@ -10,7 +10,7 @@ from metrics import Metrics
 from telemetry import Telemetry
 from yaml import safe_load
 
-with open('./log.yaml', 'r') as log_config_file:
+with open(f'{join(".", "settings", "log.yaml")}', 'r') as log_config_file:
     log_config = safe_load(log_config_file)
 
 dictConfig(log_config)

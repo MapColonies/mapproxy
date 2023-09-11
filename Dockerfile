@@ -42,9 +42,11 @@ WORKDIR /mapproxy
 COPY ./config/app ./config/scripts ./config/uwsgi ./
 
 RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
-    chmod -R g+w ./
+    mkdir -p ./settings && \
+    chgrp -R 0 ./settings && \
+    chmod -R g=u+w ./settings
 
-# creating user to simulate openshift
+# Creating user to simulate openshift.
 RUN useradd -ms /bin/bash user && usermod -a -G root user
 USER user
 
