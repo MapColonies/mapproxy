@@ -43,6 +43,10 @@ COPY ./config/app ./config/scripts ./config/uwsgi ./
 RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
     chmod -R g+w ./
 
+# creating user to simulate openshift
+RUN useradd -ms /bin/bash user && usermod -a -G root user
+USER user
+
 # Expose the port that the application listens on.
 EXPOSE 8080
 
