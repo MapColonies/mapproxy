@@ -8,6 +8,7 @@ ENV \
     PYTHONUNBUFFERED=1 \
     # global
     LOG_LEVEL=WARNING \
+    REQUESTS_LOG_LEVEL=WARNING \
     # uwsgi
     PROCESSES=6 \
     THREADS=10 \
