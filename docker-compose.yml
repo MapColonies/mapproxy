@@ -5,13 +5,14 @@ services:
       context: .
     environment:
       - LOG_LEVEL=INFO
+      - REQUESTS_LOG_LEVEL=INFO
       - TELEMETRY_TRACING_ENABLED=false
       - TELEMETRY_METRICS_ENABLED=false
     ports:
       - 3031:80
     volumes:
       - ./mapproxy.example.yaml:/mapproxy/mapproxy.yaml
-      - ./config/uwsgi/uwsgi.default.conf:/mapproxy/uwsgi.default.conf
+      - ./config/uwsgi/uwsgi.default.ini:/mapproxy/uwsgi.default.ini
       - ./config/app/log.default.yaml:/mapproxy/log.default.yaml
   nginx:
     container_name: nginx
