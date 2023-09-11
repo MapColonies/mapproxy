@@ -22,7 +22,7 @@ loggers:
     level: $LOG_LEVEL
     handlers: [mapproxy]
   source_requests:
-    level: $LOG_LEVEL
+    level: $REQUESTS_LOG_LEVEL
     qualname: mapproxy.source.request
     propagate: false
     handlers: [source_requests]

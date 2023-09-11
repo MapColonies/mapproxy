@@ -7,8 +7,6 @@ This custom mapproxy repo manages deployment configurations and a docker image, 
 
 Here is a list of important environment variables affecting image build/runtime. Additional variables could be found inside the [Dockerfile](Dockerfile).
 
-`TARGET_BUILD` - selects a mode to start mapproxy  **`nginx`** | `development` | `base`
-
 
 ## Run Locally
 

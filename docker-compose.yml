@@ -1,5 +1,6 @@
 services:
   mapproxy:
+    container_name: mapproxy
     build:
       context: .
     environment:
@@ -7,10 +8,27 @@ services:
       - TELEMETRY_TRACING_ENABLED=false
       - TELEMETRY_METRICS_ENABLED=false
     ports:
-      - 8080:80
+      - 3031:80
     volumes:
-      - ${PWD}/config/mapproxy/mapproxy.example.yaml:/mapproxy/config/mapproxy.yaml
+      - ./mapproxy.example.yaml:/mapproxy/mapproxy.yaml
+      - ./config/uwsgi/uwsgi.default.conf:/mapproxy/uwsgi.default.conf
+      - ./config/app/log.default.yaml:/mapproxy/log.default.yaml
+  nginx:
+    container_name: nginx
+    image: nginx:1.13
+    volumes:
+      - ./config/nginx/nginx.default.conf:/etc/nginx/nginx.conf:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: 200m
+        max-file: '10'
+    depends_on:
+      - mapproxy
+    ports:
+    - 80:80
   uwsgi-exporter:
+    container_name: uwsgi-exporter
     image: timonwong/uwsgi-exporter
     ports: 
       - 9117:9117

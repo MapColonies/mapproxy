@@ -1,0 +1,28 @@
+version: 1
+disable_existing_loggers: false
+formatters:
+  json:
+    (): logs.CustomJSONFormatter
+    format: "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+    rename_fields:
+      asctime: timestamp
+      name: source
+      levelname: loglevel
+handlers:
+  mapproxy:
+    class: logging.StreamHandler
+    formatter: json
+    stream: ext://sys.stdout
+  source_requests:
+    class: logging.StreamHandler
+    formatter: json
+    stream: ext://sys.stdout
+loggers:
+  root:
+    level: {{ .Values.mapproxy.env.logLevel }}
+    handlers: [mapproxy]
+  source_requests:
+    level: {{ .Values.mapproxy.env.requestsLogLevel }}
+    qualname: mapproxy.source.request
+    propagate: false
+    handlers: [source_requests]

@@ -1,10 +1,8 @@
 # syntax=docker/dockerfile:1
-ARG TARGET_BUILD=nginx
-FROM ghcr.io/mapproxy/mapproxy/mapproxy:1.16.0-${TARGET_BUILD}
-ARG TARGET_BUILD
+FROM ghcr.io/mapproxy/mapproxy/mapproxy:1.16.0
+
 
 ENV \
-    TARGET_BUILD=${TARGET_BUILD} \
     # Keeps Python from buffering stdout and stderr to avoid situations where
     # the application crashes without emitting any logs due to buffering.
     PYTHONUNBUFFERED=1 \
@@ -27,8 +25,12 @@ ENV \
 # into this layer.
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
+    # install uwsgi dependencies
+    apt update && \
+    apt -y install --no-install-recommends gcc && \
     # install mapproxy dependencies
     python -m pip install -r requirements.txt && \
+    pip cache purge && \
     apt-get -y update && \
     apt-get install -y \
     gettext
@@ -36,16 +38,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 WORKDIR /mapproxy
 
 # Copy custom code and configurations.
-COPY ./config/mapproxy ./config/scripts ./config/uwsgi ./
+COPY ./config/app ./config/scripts ./config/uwsgi ./
 
-# Copy custom nginx config overriding base image's config.
-COPY ./config/nginx/nginx.default.conf /etc/nginx/sites-enabled/default
-
-# This dir is used by the official mapproxy image so it must be created.
-RUN mkdir -p config/cache_data
+RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
+    chmod -R g+w ./
 
 # Expose the port that the application listens on.
 EXPOSE 8080
 
 # Run the application.
-ENTRYPOINT ["bash", "-c", "./docker-entrypoint.sh $TARGET_BUILD"]
+ENTRYPOINT ["bash", "-c", "./docker-entrypoint.sh"]

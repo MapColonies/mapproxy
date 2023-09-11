@@ -78,8 +78,8 @@
             items:
             - key: "UWSGI_INI"
               path: "uwsgi.ini"
-            - key: "LOG_INI"
-              path: "log.ini"
+            - key: "LOG_CONF"
+              path: "log.yaml"
         {{- if .Values.rasterCommon.storage.fs.internalPvc.enabled }}
         - name: sources-storage
           persistentVolumeClaim:
