@@ -151,8 +151,10 @@ mapproxy:
     processes: 6
     threads: 10
     disableLogging: true
-    stats: 1717
-    statsHttp: false
+    statsServer:
+      enabled: false
+      stats: 1717
+      statsMinify: true
   env:
     cors:
       enabled: true
