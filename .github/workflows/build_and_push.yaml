@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       Docker_Repository: ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+      PATCH_FILES: true
     steps:
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
@@ -19,5 +20,5 @@ jobs:
       - name: downcase repository
         run: |
           echo "Docker_Repository=${Docker_Repository,,}" >>${GITHUB_ENV}
-      - run: docker build . -t ${{ env.Docker_Repository }}
+      - run: docker build --build-arg PATCH_FILES=${{ env.PATCH_FILES }} . -t ${{ env.Docker_Repository }}
       - run: docker push ${{ env.Docker_Repository }}

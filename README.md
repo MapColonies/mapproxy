@@ -7,6 +7,10 @@ This custom mapproxy repo manages deployment configurations and a docker image b
 
 Here is a list of important environment variables affecting image build/runtime. Additional variables could be found inside the [Dockerfile](Dockerfile).
 
+### Build Time
+
+**PATCH_FILES** - select if mapproxy's source should be patched with changes defined in this repo  **`true`** | `false`
+
 
 ## Run Locally
 

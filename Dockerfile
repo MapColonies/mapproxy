@@ -46,6 +46,13 @@ RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
     chgrp -R 0 ./settings && \
     chmod -R g=u+w ./settings
 
+# Patch mapproxy source code.
+ARG PATCH_FILES=true
+RUN --mount=type=bind,source=config/patch/redis.py,target=redis.py \
+    if [ "${PATCH_FILES}" = true ]; then \
+        cp redis.py /usr/local/lib/python3.10/site-packages/mapproxy/cache/redis.py; \
+    fi
+
 # Creating user to simulate openshift.
 RUN useradd -ms /bin/bash user && usermod -a -G root user
 USER user
