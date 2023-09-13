@@ -293,3 +293,21 @@ mapproxinator:
       requests:
         cpu: 100m
         memory: 128Mi
+
+uwsgiExporter:
+  enabled: true
+  image:
+    repository: 'timonwong/uwsgi-exporter'
+    tag: 'v1.3.0'
+  env:
+    logLevel: info # one of [debug, info, warn, error]
+  port: 9117
+  resources:
+    enabled: true
+    value:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

@@ -25,8 +25,8 @@
       annotations:
         checksum/configmap: {{
           include (print $.Template.BasePath "/mapproxy-configmap.yaml") . | sha256sum }}
-        prometheus.io/port: {{ .Values.env.metrics.prometheus.port | quote }}
-        prometheus.io/scrape: {{ .Values.env.metrics.prometheus.scrape | quote }}
+          prometheus.io/port: {{ .Values.env.metrics.prometheus.port | quote }}
+          prometheus.io/scrape: {{ .Values.env.metrics.prometheus.scrape | quote }}
       {{- end }}
     spec:
     {{- if $cloudProviderImagePullSecretName }}
@@ -39,6 +39,8 @@
       containers:
         ######################################################### MapProxy Deployment #########################################################
         {{- template "mapproxy-chart.mapproxy-container" (merge (dict "releaseName" .releaseName "chartName" .chartName "cloudProviderDockerRegistryUrl" $cloudProviderDockerRegistryUrl "s3SecretName" $s3SecretName "resources" .resources) .) }}
+        ######################################################### uwsgi Deployment #########################################################
+        {{- template "mapproxy-chart.uwsgi-exporter-container" (merge (dict "releaseName" .releaseName "chartName" .chartName "cloudProviderDockerRegistryUrl" $cloudProviderDockerRegistryUrl "resources" .Values.uwsgiExporter.resources) .) }}
         ######################################################### Mapproxinator Deployment #########################################################
         {{- template "mapproxy-chart.mapproxinator-container" (merge (dict "releaseName" .releaseName "chartName" .chartName "cloudProviderDockerRegistryUrl" $cloudProviderDockerRegistryUrl "s3SecretName" $s3SecretName "postgresSecretName" $postgresSecretName) .) }}
       volumes:

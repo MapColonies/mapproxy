@@ -42,9 +42,9 @@ WORKDIR /mapproxy
 COPY ./config/app ./config/scripts ./config/uwsgi ./
 
 RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
-    mkdir -p ./settings && \
-    chgrp -R 0 ./settings && \
-    chmod -R g=u+w ./settings
+    mkdir -p ./settings ./cache_data && \
+    chgrp -R 0 ./ && \
+    chmod -R g=u+w ./
 
 # Patch mapproxy source code.
 ARG PATCH_FILES=true
