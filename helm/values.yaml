@@ -76,7 +76,7 @@ rasterCommon:
     tilesStorageProvider: 'FS'
     mapproxyConfigProvider: db
     fs:
-      internalPvc:
+      internalPvc:prometheus.i
         enabled: true
         name: internal-pvc
         tilesSubPath: tiles
@@ -108,6 +108,9 @@ env:
   metrics:
     enabled: false
     url: http://localhost:55681/v1/metrics
+    prometheus:
+      port: 1717
+      scrape: true
 
 mapproxy:
   enabled: true
