@@ -76,7 +76,7 @@ rasterCommon:
     tilesStorageProvider: 'FS'
     mapproxyConfigProvider: db
     fs:
-      internalPvc:prometheus.i
+      internalPvc:
         enabled: true
         name: internal-pvc
         tilesSubPath: tiles
