@@ -1,0 +1,97 @@
+# TODO: add if condition(s)!
+# TODO: why nginx is not checking for credentials??????!!!!
+{{- define "mapproxy-chart.uwsgi-exporter-container" }}
+        - name: uwsgi-exporter
+          image: {{ .cloudProviderDockerRegistryUrl }}{{ .Values.uwsgiExporter.image.repository }}:{{ .Values.uwsgiExporter.image.tag }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }} 
+          args:
+            - "--stats.uri=http://localhost:{{ .Values.mapproxy.uwsgi.statsServer.stats }} --log.level={{ .Values.uwsgiExporter.env.logLevel }}"
+          {{- if .resources.enabled }}
+          resources:
+            {{- toYaml .resources.value | nindent 12 }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: "/-/healthy"
+              port: "uwsgimetrics"
+            initialDelaySeconds: 2
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: "/metrics"
+              port: "uwsgimetrics"
+            initialDelaySeconds: 2
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          ports:
+            - name: "uwsgimetrics"
+              containerPort: {{ .Values.uwsgiExporter.port }}
+        # - name: mapproxy
+        #   image: {{ .cloudProviderDockerRegistryUrl }}{{ .Values.mapproxy.image.repository }}:{{ .Values.mapproxy.image.tag }}
+        #   imagePullPolicy: {{ .Values.imagePullPolicy }} 
+        #   env:
+        #     {{- if .Values.rasterCommon.ca.secretName }}
+        #     - name: REQUESTS_CA_BUNDLE
+        #       value: {{ printf "%s/%s" .Values.rasterCommon.ca.path .Values.rasterCommon.ca.key | quote }}
+        #     - name: NODE_EXTRA_CA_CERTS
+        #       value: {{ printf "%s/%s" .Values.rasterCommon.ca.path .Values.rasterCommon.ca.key | quote }}
+        #     {{- end }}
+        #     {{- if eq (upper .Values.rasterCommon.storage.tilesStorageProvider) "S3" }}
+        #     - name: AWS_ACCESS_KEY_ID
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: {{ .s3SecretName }}
+        #           key: accessKeyId
+        #     - name: AWS_SECRET_ACCESS_KEY
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: {{ .s3SecretName }}
+        #           key: secretAccessKey
+        #     {{- end }}
+        #   envFrom:
+        #     - configMapRef:
+        #         name: {{ .releaseName }}-configmap
+        #   {{- if .resources.enabled }}
+        #   resources:
+        #     {{- toYaml .resources.value | nindent 12 }}
+        #   {{- end }}
+        #   volumeMounts:
+        #   - mountPath: /mapproxy/mapproxy.yaml
+        #     name: mapproxy-config
+        #     subPath: mapproxy.yaml
+        #   {{- if .Values.authentication.ca.enabled }}
+        #   - name: root-ca
+        #     mountPath: "/usr/local/share/ca-certificates"
+        #   {{- end }}
+        #   {{- if .Values.authentication.ssl.enabled }}
+        #   - name: open-ssl
+        #     mountPath: "/etc/ssl/openssl.cnf"
+        #     subPath: "openssl.cnf"
+        #   {{- end }}
+        #   - mountPath: "/mapproxy/uwsgi.ini"
+        #     name: uwsgi-config
+        #     subPath: uwsgi.ini
+        #   - mountPath: "/mapproxy/log.yaml"
+        #     name: uwsgi-config
+        #     subPath: log.yaml
+        #   {{- if .Values.rasterCommon.storage.fs.internalPvc.enabled}}
+        #   - mountPath: /layerSources
+        #     name: sources-storage
+        #     subPath: {{ .Values.rasterCommon.storage.fs.internalPvc.tilesSubPath }}
+        #   {{- end }}
+        #   ports:
+        #     - name: uwsgi
+        #       containerPort: {{ .Values.mapproxy.uwsgi.socket }}
+        #       protocol: TCP
+        #   readinessProbe:
+        #     httpGet:
+        #       path: /service?REQUEST=GetCapabilities&SERVICE=WMTS
+        #       port: {{ .Values.mapproxy.targetPort }}
+        #     initialDelaySeconds: 30
+        #     timeoutSeconds: 5
+{{- end }}
