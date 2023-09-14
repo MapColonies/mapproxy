@@ -109,7 +109,7 @@ env:
     enabled: false
     url: http://localhost:55681/v1/metrics
     prometheus:
-      port: 1717
+      port: 9117
       scrape: true
 
 mapproxy:
