@@ -13,6 +13,7 @@ class Metrics():
     
     def __call__(self, environ, start_response):
         if environ['PATH_INFO'] == '/metrics':
+            # see how to add metrics https://github.com/prometheus/client_python#instrumenting
             response = self.metrics_app(environ, start_response)
             return response
         response = self.app(environ, start_response)

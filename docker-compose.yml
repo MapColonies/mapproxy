@@ -11,9 +11,9 @@ services:
     ports:
       - 3031:80
     volumes:
-      - ./mapproxy.example.yaml:/mapproxy/mapproxy.yaml
-      - ./config/uwsgi/uwsgi.default.ini:/mapproxy/uwsgi.default.ini
-      - ./config/app/log.default.yaml:/mapproxy/log.default.yaml
+      - ./mapproxy.example.yaml:/mapproxy/mapproxy.yaml:ro
+      - ./config/uwsgi/uwsgi.default.ini:/mapproxy/uwsgi.default.ini:ro
+      - ./config/app/log.default.yaml:/mapproxy/log.default.yaml:ro
   nginx:
     container_name: nginx
     image: nginx:1.25

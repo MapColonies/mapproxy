@@ -39,3 +39,9 @@ Stop the app
 ```bash
   docker compose down
 ```
+
+## Metrics
+
+Metrics are exposed by mapproxy and uwsgi. **mapproxy** exposes them at `/metrics` endpoint on it's default port. in **uwsgi** case it's a bit more complicated, they are exposed by a side-car container, `uwsgi-exporter` on `/metrics` endpoint at it's port.
+
+To customize **`mapproxy`** metrics add them in application code see [here](https://github.com/prometheus/client_python#instrumenting). To add custom **`uwsgi`** metrics modify the uwsgi configuration file see [here](https://uwsgi-docs.readthedocs.io/en/latest/Metrics.html#custom-metrics).
