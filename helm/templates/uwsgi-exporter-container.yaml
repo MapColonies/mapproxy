@@ -3,7 +3,7 @@
           image: {{ .cloudProviderDockerRegistryUrl }}{{ .Values.uwsgiExporter.image.repository }}:{{ .Values.uwsgiExporter.image.tag }}
           imagePullPolicy: {{ .Values.imagePullPolicy }} 
           args:
-            - --stats.uri=http://localhost:{{ .Values.mapproxy.uwsgi.statsServer.stats }} --log.level={{ .Values.uwsgiExporter.env.logLevel }}
+            - --stats.uri=localhost:{{ .Values.mapproxy.uwsgi.statsServer.stats }} --log.level={{ .Values.uwsgiExporter.env.logLevel }}
           {{- if .resources.enabled }}
           resources:
             {{- toYaml .resources.value | nindent 12 }}
