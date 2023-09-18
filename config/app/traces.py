@@ -35,8 +35,6 @@ class Traces():
         BotocoreInstrumentor().instrument()
         SQLite3Instrumentor().instrument()
 
-        # TODO: check how to prevent requests blocking
-
         # Add OpenTelemetry middleware and activate application
         self.tracing_app = OpenTelemetryMiddleware(
             self.app, None, None, tracer_provider)
