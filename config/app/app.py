@@ -7,7 +7,7 @@ from logs import Logs
 # from log import TraceRequest
 from mapproxy.wsgiapp import make_wsgi_app
 from metrics import Metrics
-from telemetry import Telemetry
+from traces import Traces
 from yaml import safe_load
 
 with open(f'{join(".", "settings", "log.yaml")}', 'r') as log_config_file:
@@ -25,4 +25,4 @@ application = make_wsgi_app(mapproxy_conf)
 # application = TraceRequest(application)
 application = Logs(application)
 application = Metrics(application) if metrics_enabled.strip().lower() == 'true' else application
-application = Telemetry(application) if tracing_enabled.strip().lower() == 'true' else application # TODO: check
+application = Traces(application) if tracing_enabled.strip().lower() == 'true' else application # TODO: check
