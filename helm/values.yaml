@@ -159,10 +159,6 @@ mapproxy:
       stats: 1717
       statsMinify: true
   env:
-    cors:
-      enabled: true
-      allowedOrigin: '*'
-      allowedHeaders: ''
     authentication:
       token:
         queryName: token

@@ -119,19 +119,3 @@ Returns the tracing url from global if exists or from the chart's values
     {{- .Values.env.metrics.url -}}
 {{- end -}}
 {{- end -}}
-
-{{- define "map-proxy.cors.allowedHeaders" -}}
-{{- $headerList := list -}}
-{{- if ne .Values.mapproxy.env.cors.allowedHeaders "" -}}
-{{- range $k, $v := (split "," .Values.mapproxy.env.cors.allowedHeaders) -}}
-{{- $headerList = append $headerList $v -}}
-{{- end -}}
-{{- if ne .Values.rasterCommon.authentication.opa.customHeaderName "" -}}
-{{- $headerList = append $headerList .Values.rasterCommon.authentication.opa.customHeaderName -}}
-{{- end -}}
-{{- $headerList = uniq $headerList -}}
-{{-  quote (join "," $headerList) -}}
-{{- else -}}
-{{- .Values.rasterCommon.authentication.opa.customHeaderName | quote -}}
-{{- end -}}
-{{- end -}}
