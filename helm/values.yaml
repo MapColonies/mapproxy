@@ -164,9 +164,6 @@ mapproxy:
       allowedOrigin: '*'
       allowedHeaders: ''
     authentication:
-      WMS:
-        enabled: true
-        requiredDomain: raster_wms
       token:
         queryName: token
         headerNameOverride: #will use "rasterCommon.authentication.opa.customHeaderName" if not specified
