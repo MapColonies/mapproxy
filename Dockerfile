@@ -13,9 +13,6 @@ ENV \
     PROCESSES=6 \
     THREADS=10 \
     # Telemetry
-    TELEMETRY_TRACING_ENABLED='false' \
-    TELEMETRY_ENDPOINT='localhost:4317' \
-    TELEMETRY_METRICS_ENABLED='false' \
     OTEL_RESOURCE_ATTRIBUTES='service.name=mapcolonies,application=mapproxy' \
     OTEL_SERVICE_NAME='mapproxy' \
     TELEMETRY_TRACING_ENDPOINT='localhost:4317' \
