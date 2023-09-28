@@ -1,8 +1,6 @@
 {{- define "mapproxy-chart.mapproxy-bundle" }}
   {{- $cloudProviderDockerRegistryUrl := include "mapproxy.cloudProviderDockerRegistryUrl" . -}}
   {{- $cloudProviderImagePullSecretName := include "mapproxy.cloudProviderImagePullSecretName" . -}}
-  {{- $caSecretName := ternary .Values.authentication.ca.externalSecretName (printf "%s%s" .Release.Name "-root-ca") .Values.authentication.ca.useExternal }}
-  {{- $sslSecretName := ternary .Values.authentication.ssl.externalSecretName (printf "%s%s" .Release.Name "-open-ssl") .Values.authentication.ssl.useExternal }}
   {{- $postgresSecretName := ternary .Values.rasterCommon.db.secrets.externalSecretName (printf "%s%s" .Release.Name "-postgres-secret") .Values.rasterCommon.db.secrets.useExternal }}
   {{- $s3SecretName := ternary .Values.rasterCommon.storage.s3.secretName (printf "%s%s" .Release.Name  "-s3-secret") (ne .Values.rasterCommon.storage.s3.secretName "") }}
   replicas: {{ .replicaCount }}
@@ -66,16 +64,6 @@
               - key: certFile
                 path: cert.pem
         {{- end }}    
-        {{- if .Values.rasterCommon.ca.secretName }}
-        - name: root-ca
-          secret:
-            secretName: {{.Values.rasterCommon.ca.secretName }}
-        {{- end }}                
-        {{- if .Values.authentication.ssl.enabled }}
-        - name: open-ssl
-          secret:
-            secretName: {{ $sslSecretName }}
-        {{- end }}
         - name: uwsgi-config
           configMap:
             name: {{ .releaseName }}-init-configmap

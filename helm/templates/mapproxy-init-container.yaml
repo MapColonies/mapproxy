@@ -39,10 +39,6 @@
                   name: {{ .postgresSecretName }}
                   key: password                        
             {{- end }}
-            {{- if .Values.rasterCommon.ca.secretName }}
-            - name: REQUESTS_CA_BUNDLE
-              value: '/usr/local/share/ca-certificates/ca.crt'
-            {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .releaseName }}-init-configmap
@@ -57,15 +53,6 @@
             - mountPath: {{ .Values.initContainer.env.ssl.CERT_DIR }}
               name: cert-file
             {{- end }}     
-            {{- if .Values.authentication.ca.enabled }}
-            - mountPath: "/usr/local/share/ca-certificates"
-              name: root-ca
-            {{- end }}
-            {{- if .Values.authentication.ssl.enabled }}
-            - mountPath: "/etc/ssl/openssl.cnf"
-              name: open-ssl
-              subPath: "openssl.cnf"
-            {{- end }}
             {{- if eq (upper .Values.rasterCommon.storage.mapproxyConfigProvider) "FS" }}
             - mountPath: /configSource/mapproxy.yaml
               name: sources-storage
