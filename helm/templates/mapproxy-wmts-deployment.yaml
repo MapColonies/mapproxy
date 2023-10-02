@@ -5,6 +5,18 @@
 {{- $type := "wmts"}}
 {{- $replicaCount := .Values.mapproxy.wmts.replicaCount }}
 
+{{- if .Values.authentication.ca.enabled }}
+{{- if and .Values.authentication.ca.useExternal (not .Values.authentication.ca.externalSecretName) }}
+{{- fail "When using external ca secret the value for .Values.authentication.ca.externalSecretName should be set" }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.authentication.ssl.enabled }}
+{{- if and .Values.authentication.ssl.useExternal (not .Values.authentication.ssl.externalSecretName) }}
+{{- fail "When using external ssl secret the value for .Values.authentication.ssl.externalSecretName should be set" }}
+{{- end }}
+{{- end }}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:

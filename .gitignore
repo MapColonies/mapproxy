@@ -195,11 +195,4 @@ pyrightconfig.json
 .history
 .ionide
 
-#charts
-*.tgz
-*Chart.lock
-
-#local-values
-*local.yaml
-
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
