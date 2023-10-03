@@ -65,7 +65,7 @@
             items:
               - key: certFile
                 path: cert.pem
-        {{- end }}    
+        {{- end }}
         {{- if .Values.rasterCommon.ca.secretName }}
         - name: root-ca
           secret:
@@ -75,7 +75,7 @@
         - name: open-ssl
           secret:
             secretName: {{ $sslSecretName }}
-        {{- end }}
+        {{- end }}    
         - name: uwsgi-config
           configMap:
             name: {{ .releaseName }}-init-configmap
