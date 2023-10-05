@@ -195,4 +195,13 @@ pyrightconfig.json
 .history
 .ionide
 
+# Output of 'helm dependency build'
+*.tgz
+
+# Helm-Chart
+*Chart.lock
+helm/local.yaml
+
+
+
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode

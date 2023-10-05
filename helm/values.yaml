@@ -1,7 +1,7 @@
 global:
   cloudProvider:
     dockerRegistryUrl: my-registry-url.io
-    imagePullSecretName: 'my-registry-secret'
+    imagePullSecretName: "my-registry-secret"
     flavor: openshift
   tracing:
     enabled: false
@@ -23,7 +23,7 @@ authentication:
     enabled: false
     useExternal: false
     externalSecretName: ""
-  
+
 opa:
   image: openpolicyagent/opa
   imageTag: 0.29.4-envoy-3
@@ -56,9 +56,9 @@ envoy:
 
 rasterCommon:
   ca:
-    secretName: ''
-    path: '/usr/local/share/ca-certificates'
-    key: 'ca.crt'
+    secretName: ""
+    path: "/usr/local/share/ca-certificates"
+    key: "ca.crt"
   authentication:
     opa:
       enabled: false
@@ -71,9 +71,9 @@ rasterCommon:
     rejectUnauthorized: false
     secrets:
       useExternal: false
-      externalSecretName: ''
+      externalSecretName: ""
   storage:
-    tilesStorageProvider: 'FS'
+    tilesStorageProvider: "FS"
     mapproxyConfigProvider: db
     fs:
       internalPvc:
@@ -82,8 +82,8 @@ rasterCommon:
         tilesSubPath: tiles
     s3:
       enabled: false
-      endpointUrl: 'http://localhost:9000'
-      tilesBucket: 'raster'
+      endpointUrl: "http://localhost:9000"
+      tilesBucket: "raster"
       forcePathStyle: true
       sslEnabled: false
       virtualHosting: false
@@ -98,7 +98,7 @@ imagePullPolicy: Always
 
 cloudProvider:
   dockerRegistryUrl: my-registry-url.io
-  imagePullSecretName: 'my-registry-secret'
+  imagePullSecretName: "my-registry-secret"
   flavor: openshift
 
 env:
@@ -142,7 +142,7 @@ mapproxy:
     nodePort: 30002
   image:
     repository: mapproxy
-    tag: 'latest'
+    tag: "latest"
   db:
     nameOverride:
     schema: MapproxyConfig
@@ -178,7 +178,7 @@ mapproxy:
     requestPayloadLimit: 1mb
   route:
     enabled: true
-    host: 
+    host:
     path: /api/raster/v1
     https: true
     useCert: false
@@ -187,17 +187,17 @@ mapproxy:
       duration: 60s # supported units (us, ms, s, m, h, d)
   ingress:
     enabled: false
-    type: 'nginx-org' # supported values: 'nginx-org' | 'nginx-kubernetes'
+    type: "nginx-org" # supported values: 'nginx-org' | 'nginx-kubernetes'
     path: /api/raster/v1
-    host: 'localhost'
-    tls: 
+    host: "localhost"
+    tls:
       enabled: true
-      useExternal: ''
+      useExternal: ""
 
 initContainer:
   image:
     repository: mapproxinator
-    tag: 'latest'
+    tag: "latest"
   env:
     logLevel: warn
     ssl:
@@ -235,7 +235,7 @@ nginx:
   replicaCount: 1
   image:
     repository: nginx
-    tag: 'latest' 
+    tag: "latest"
   port: 8080
   internalServicePort: 80
   targetPort: 8080
@@ -255,7 +255,7 @@ mapproxinator:
   replicaCount: 1
   image:
     repository: mapproxinator
-    tag: 'latest'
+    tag: "latest"
   port: 80
   targetPort: 8081
   nodePort: 30002
@@ -290,8 +290,8 @@ mapproxinator:
 uwsgiExporter:
   enabled: true
   image:
-    repository: 'timonwong/uwsgi-exporter'
-    tag: 'v1.3.0'
+    repository: "timonwong/uwsgi-exporter"
+    tag: "v1.3.0"
   env:
     logLevel: info # one of [debug, info, warn, error]
   port: 9117
@@ -304,3 +304,49 @@ uwsgiExporter:
       requests:
         cpu: 100m
         memory: 128Mi
+
+redis:
+  enabled: true
+  image:
+    registry: "docker.io"
+    repository: "bitnami/redis"
+    tag: "7.2.1"
+
+  architecture: "standalone"
+
+  commonConfiguration: |-
+    # Enable AOF https:redis.io/topics/persistence#append-only-file
+    appendonly no
+    # Disable RDB https, AOF persistence already enabled.
+    save ""
+
+  master:
+    configuration: |-
+      maxmemory 500mb
+    disableCommands:
+      - FLUSHALL
+    resources:
+      limits:
+        cpu: 500m
+        memory: 650Mi
+      requests:
+        cpu: 250m
+        memory: 650Mi
+    podSecurityContext:
+      enabled: false
+      fsGroup: 1001330000
+    containerSecurityContext:
+      enabled: false
+      runAsUser: 1001330000
+    kind: StatefulSet
+    podLabels:
+      app: redis
+      role: master
+    persistence:
+      enabled: true
+      storageClass: nfs
+      size: 1Gi
+    maxmemoryPolicy: noeviction
+
+  serviceAccount:
+    create: false

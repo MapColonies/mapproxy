@@ -4,3 +4,8 @@ description: A Helm chart for mapproxy service
 type: application
 version: 1.0.0
 appVersion: 1.0.0
+dependencies:
+  - name: redis
+    version: 18.1.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
