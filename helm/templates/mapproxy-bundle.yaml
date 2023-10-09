@@ -70,12 +70,12 @@
         - name: root-ca
           secret:
             secretName: {{.Values.rasterCommon.ca.secretName }}
-        {{- end }}                
+        {{- end }}
         {{- if .Values.authentication.ssl.enabled }}
         - name: open-ssl
           secret:
             secretName: {{ $sslSecretName }}
-        {{- end }}    
+        {{- end }}
         - name: uwsgi-config
           configMap:
             name: {{ .releaseName }}-init-configmap

@@ -42,7 +42,7 @@
             {{- if .Values.rasterCommon.ca.secretName }}
             - name: REQUESTS_CA_BUNDLE
               value: '/usr/local/share/ca-certificates/ca.crt'
-            {{- end }}            
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .releaseName }}-init-configmap
@@ -65,7 +65,7 @@
             - mountPath: "/etc/ssl/openssl.cnf"
               name: open-ssl
               subPath: "openssl.cnf"
-            {{- end }}                 
+            {{- end }}
             {{- if eq (upper .Values.rasterCommon.storage.mapproxyConfigProvider) "FS" }}
             - mountPath: /configSource/mapproxy.yaml
               name: sources-storage

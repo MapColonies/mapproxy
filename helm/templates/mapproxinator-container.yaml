@@ -80,7 +80,7 @@
             - mountPath: "/etc/ssl/openssl.cnf"
               name: open-ssl
               subPath: "openssl.cnf"
-            {{- end }}                        
+            {{- end }}
           {{- if .Values.mapproxinator.resources.enabled }}
           resources:
             {{- toYaml .Values.mapproxinator.resources.value | nindent 12 }}
