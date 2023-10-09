@@ -9,3 +9,4 @@ data:
   nginx.mapproxy.conf: {{ tpl (.Files.Get "config/nginx.mapproxy.conf") . | quote }}
   nginx.mapproxy.wmts.conf: {{ tpl (.Files.Get "config/nginx.mapproxy.wmts.conf") . | quote }}
 {{- end }}
+
