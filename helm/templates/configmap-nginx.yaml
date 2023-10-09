@@ -1,0 +1,12 @@
+{{- if .Values.mapproxy.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-nginx-configmap
+data:
+  default.conf: {{ tpl (.Files.Get "config/default.conf") . | quote }}
+  nginx.conf: {{ tpl (.Files.Get "config/nginx.conf") . | quote }}
+  nginx.mapproxy.conf: {{ tpl (.Files.Get "config/nginx.mapproxy.conf") . | quote }}
+  nginx.mapproxy.wmts.conf: {{ tpl (.Files.Get "config/nginx.mapproxy.wmts.conf") . | quote }}
+{{- end }}
+

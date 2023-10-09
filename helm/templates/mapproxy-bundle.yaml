@@ -65,12 +65,12 @@
             items:
               - key: certFile
                 path: cert.pem
-        {{- end }}    
+        {{- end }}
         {{- if .Values.rasterCommon.ca.secretName }}
         - name: root-ca
           secret:
             secretName: {{.Values.rasterCommon.ca.secretName }}
-        {{- end }}                
+        {{- end }}
         {{- if .Values.authentication.ssl.enabled }}
         - name: open-ssl
           secret:

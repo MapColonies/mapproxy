@@ -18,6 +18,4 @@ data:
   TELEMETRY_TRACING_ENABLED: {{ .Values.global.tracing.enabled | quote }}
   TELEMETRY_TRACING_ENDPOINT: {{ .Values.global.tracing.url | quote }}
   TELEMETRY_TRACING_SAMPLING_RATIO_DENOMINATOR: {{ .Values.global.tracing.samplingRatioDenominator | quote }}
-  AUTH_HEADER_NAME: {{ default .Values.rasterCommon.authentication.opa.customHeaderName .Values.mapproxy.env.authentication.token.headerNameOverride | quote }}
-  AUTH_QUERY_NAME: {{ .Values.mapproxy.env.authentication.token.queryName | quote }}
 {{- end }}

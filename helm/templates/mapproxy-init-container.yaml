@@ -56,7 +56,7 @@
               name: key-file
             - mountPath: {{ .Values.initContainer.env.ssl.CERT_DIR }}
               name: cert-file
-            {{- end }}     
+            {{- end }}
             {{- if .Values.authentication.ca.enabled }}
             - mountPath: "/usr/local/share/ca-certificates"
               name: root-ca
