@@ -47,6 +47,8 @@
             - configMapRef:
                 name: {{ .releaseName }}-mapproxinator-configmap
           volumeMounts:
+            - name: shared-config
+              mountPath: /uwsgi_config
             - mountPath: /mapproxy/mapproxy.yaml
               name: mapproxy-config
               subPath: mapproxy.yaml
