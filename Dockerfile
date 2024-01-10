@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/mapproxy/mapproxy/mapproxy:1.16.0
+FROM ghcr.io/mapproxy/mapproxy/mapproxy:2.0.1
 
 
 ENV \
@@ -45,13 +45,6 @@ RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
     mkdir -p ./settings ./cache_data && \
     chgrp -R 0 ./ && \
     chmod -R g=u+w ./
-
-# Patch mapproxy source code.
-ARG PATCH_FILES=true
-RUN --mount=type=bind,source=config/patch/redis.py,target=redis.py \
-    if [ "${PATCH_FILES}" = true ]; then \
-        cp redis.py /usr/local/lib/python3.10/site-packages/mapproxy/cache/redis.py; \
-    fi
 
 # Creating user to simulate openshift.
 RUN useradd -ms /bin/bash user && usermod -a -G root user

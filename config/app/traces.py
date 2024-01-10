@@ -4,6 +4,7 @@ from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import \
     OTLPSpanExporter
 from opentelemetry.instrumentation.botocore import BotocoreInstrumentor
+from opentelemetry.instrumentation.redis import RedisInstrumentor
 from opentelemetry.instrumentation.sqlite3 import SQLite3Instrumentor
 from opentelemetry.instrumentation.wsgi import OpenTelemetryMiddleware
 from opentelemetry.sdk.trace import TracerProvider
@@ -33,6 +34,7 @@ class Traces():
         # Activate instruments
         # LoggingInstrumentor().instrument(set_logging_format=True)
         BotocoreInstrumentor().instrument()
+        RedisInstrumentor().instrument()
         SQLite3Instrumentor().instrument()
 
         # Add OpenTelemetry middleware and activate application
