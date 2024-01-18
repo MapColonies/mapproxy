@@ -39,9 +39,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 WORKDIR /mapproxy
 
 # Copy custom code and configurations.
-COPY ./config/app ./config/scripts ./config/uwsgi ./
+COPY ./config/app ./config/scripts ./config/gunicorn ./
 
-RUN chmod g+w ./uwsgi.default.ini ./log.default.yaml && \
+RUN chmod g+w ./* ./log.default.yaml && \
     mkdir -p ./settings ./cache_data && \
     chgrp -R 0 ./ && \
     chmod -R g=u+w ./

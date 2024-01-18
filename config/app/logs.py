@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import gmtime
 
-import uwsgi
+# import uwsgi
 from pythonjsonlogger import jsonlogger
 
 
@@ -15,7 +15,7 @@ class Logs():
         self.app = app
     
     def __call__(self, environ, start_response):
-        uwsgi.set_logvar('timestamp', get_current_formatted_time())
+        # uwsgi.set_logvar('timestamp', get_current_formatted_time())
         response = self.app(environ, start_response)
         return response
 
