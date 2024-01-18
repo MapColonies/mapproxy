@@ -34,6 +34,9 @@
           - mountPath: /mapproxy/mapproxy.yaml
             name: mapproxy-config
             subPath: mapproxy.yaml
+          - mountPath: /mapproxy/gunicorn.conf.py
+            name: gunicorn-config
+            subPath: gunicorn.conf.py
           {{- if .Values.authentication.ca.enabled }}
           - name: root-ca
             mountPath: "/usr/local/share/ca-certificates"

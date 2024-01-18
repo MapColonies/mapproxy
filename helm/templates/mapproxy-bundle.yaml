@@ -48,6 +48,12 @@
           emptyDir: {}
         - name: shared-config
           emptyDir: {}
+        - name: gunicorn-config
+          configMap:
+            name: {{ .releaseName }}-configmap
+            items:
+              - key: GUNICORN_CONFIG
+                path: "gunicorn.conf.py"
         {{- if .Values.rasterCommon.db.sslEnabled }}
         - name: ca-file
           secret:

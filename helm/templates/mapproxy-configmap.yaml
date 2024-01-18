@@ -18,4 +18,5 @@ data:
   TELEMETRY_TRACING_ENABLED: {{ .Values.global.tracing.enabled | quote }}
   TELEMETRY_TRACING_ENDPOINT: {{ .Values.global.tracing.url | quote }}
   TELEMETRY_TRACING_SAMPLING_RATIO_DENOMINATOR: {{ .Values.global.tracing.samplingRatioDenominator | quote }}
+  GUNICORN_CONFIG: {{ tpl (.Files.Get "config/gunicorn.conf.py") . | quote }}
 {{- end }}

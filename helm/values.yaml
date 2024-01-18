@@ -98,15 +98,15 @@ mapproxy:
       enabled: true
       value:
         limits:
-          cpu: 100m
-          memory: 128Mi
+          cpu: 500m
+          memory: 2Gi
         requests:
-          cpu: 100m
-          memory: 128Mi
-    nodePort: 30002
+          cpu: 500m
+          memory: 2Gi
+    nodePort: 8080
   image:
     repository: mapproxy
-    tag: "latest"
+    tag: "gunicorn"
   db:
     nameOverride:
     schema: MapproxyConfig
