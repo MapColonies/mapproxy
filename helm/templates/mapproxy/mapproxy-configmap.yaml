@@ -1,0 +1,32 @@
+{{- if .Values.mapproxy.enabled -}}
+{{- $chartName := include "mapproxy.name" . -}}
+{{- $releaseName := .Release.Name -}}
+{{- $configmapName := include "configmap.fullname" . -}}
+{{- $s3 := (include "common.s3.merged" .) | fromYaml }}
+{{- $metrics := (include "common.metrics.merged" .) | fromYaml }}
+{{- $tracing := (include "common.tracing.merged" .) | fromYaml }}
+{{- $storage := (include "common.storage.merged" .) | fromYaml }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configmapName }}
+  labels:
+    app: {{ $releaseName }}-{{ $chartName }}
+    component: map-proxy-configmap
+    environment: {{ .Values.environment }}
+    release: {{ $releaseName }}
+data:
+  S3_ENDPOINT_URL: {{ $storage.s3.endpointUrl | quote }}
+  S3_BUCKET:  {{ $s3.tilesBucket | quote }}
+  AWS_HTTPS: {{ $s3.awsHttps | quote }}
+  TELEMETRY_METRICS_ENABLED: {{ $metrics.enabled | quote }}
+  TELEMETRY_TRACING_ENABLED: {{ $tracing.enabled | quote }}
+  TELEMETRY_TRACING_ENDPOINT: {{ $tracing.url | quote }}
+  TELEMETRY_TRACING_SAMPLING_RATIO_DENOMINATOR: {{ $tracing.samplingRatioDenominator | quote }}
+  AUTH_ENABLED: {{ .Values.nginx.authorization.wms.domain | quote }}
+  {{ if and (not .Values.nginx.opalaEnabled) (.Values.nginx.authorization.wms.domain) }}
+  AUTH_VALID_DOMAIN: {{ .Values.nginx.authorization.wms.domain | quote }}
+  AUTH_HEADER_NAME: {{ .Values.nginx.opa.customHeaderName | quote }}
+  AUTH_QUERY_NAME: {{ .Values.nginx.authorization.token.queryName | quote }}
+  {{- end}}
+{{- end }}
