@@ -90,25 +90,3 @@ Returns the cloud provider image pull secret name from global if exists or from 
     {{- .Values.cloudProvider.imagePullSecretName -}}
 {{- end -}}
 {{- end -}}
-
-{{/*
-Returns the tracing url from global if exists or from the chart's values
-*/}}
-{{- define "mapproxy.tracingUrl" -}}
-{{- if .Values.global.tracing.url }}
-    {{- .Values.global.tracing.url -}}
-{{- else if .Values.cloudProvider -}}
-    {{- .Values.env.tracing.url -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Returns the tracing url from global if exists or from the chart's values
-*/}}
-{{- define "mapproxy.metricsUrl" -}}
-{{- if .Values.global.metrics.url }}
-    {{- .Values.global.metrics.url -}}
-{{- else -}}
-    {{- .Values.env.metrics.url -}}
-{{- end -}}
-{{- end -}}

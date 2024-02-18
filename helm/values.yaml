@@ -1,49 +1,49 @@
 global:
   cloudProvider:
-    dockerRegistryUrl: acrarolibotnonprod.azurecr.io
-    imagePullSecretName: acr-registry
+    dockerRegistryUrl: my-registry-url.io
+    imagePullSecretName: "my-registry-secret"
     flavor: openshift
   tracing:
     enabled: false
-    url: http://localhost:55681/v1/trace
+    url: ""
     samplingRatioDenominator: 1000
   metrics:
     enabled: false
-    url: http://localhost:55681/v1/metrics
+    url: ""
   environment: {}
   authentication:
     jwtPublicKeySecretName: map-colonies-jwks
-  ca:
-    secretName: ""
-    path: "/usr/local/share/ca-certificates"
-    key: "ca.crt"
   db:
-    host: "10.0.4.4"
-    name: "raster-dev"
+    host: ""
+    name: ""
     port: 5432
     sslEnabled: false
     schema: ""
     rejectUnauthorized: false
     secrets:
       useExternal: true
-      externalSecretName: "raster-dev-postgres-secret"
+      externalSecretName: ""
   storage:
-    tilesStorageProvider: "S3"
-    mapproxyConfigProvider: "DB"
+    tilesStorageProvider: ""
+    mapproxyConfigProvider: ""
     fs:
       internalPvc:
-        enabled: true
+        enabled: false
         name: internal-pvc-nfs
-        tilesSubPath: tiles
+        tilesSubPath: ""
     s3:
       enabled: false
-      endpointUrl: "http://10.8.0.9:9000"
-      tilesBucket: "raster-dev"
+      endpointUrl: ""
+      tilesBucket: ""
       forcePathStyle: true
       sslEnabled: false
       virtualHosting: false
       awsHttps: false
-      secretName: raster-dev-s3-secret
+      secretName: ""
+  ca:
+    secretName: "root-ca"
+    path: "/usr/local/share/ca-certificates"
+    key: "ca.crt"
   opalaEnabled: false
 
 # add pod annotations
@@ -76,11 +76,11 @@ storage:
     internalPvc:
       enabled: false
       name: ""
-      tilesSubPath: tiles
+      tilesSubPath: ""
   s3:
     enabled: false
     endpointUrl: ""
-    tilesBucket: "raster-dev"
+    tilesBucket: ""
     forcePathStyle: true
     sslEnabled: false
     virtualHosting: false
@@ -98,16 +98,15 @@ cloudProvider:
   imagePullSecretName: "my-registry-secret"
   flavor: openshift
 
-env:
-  tracing:
-    enabled: false
-    url: http://localhost:55681/v1/trace
-  metrics:
-    enabled: false
-    url: http://localhost:55681/v1/metrics
-    prometheus:
-      port: 9117
-      scrape: true
+tracing:
+  enabled: false
+  url: ""
+metrics:
+  enabled: false
+  url: ""
+  prometheus:
+    port: 9117
+    scrape: false
 
 mapproxy:
   enabled: true
@@ -118,7 +117,7 @@ mapproxy:
     enabled: true
     replicaCount: 1
     resources:
-      enabled: false
+      enabled: true
       value:
         limits:
           cpu: 200m
@@ -142,7 +141,7 @@ mapproxy:
     nodePort: 30002
   image:
     repository: mapproxy
-    tag: "v1.3.4"
+    tag: "latest"
   db:
     nameOverride:
     schema: MapproxyConfig
@@ -174,7 +173,7 @@ mapproxy:
 initContainer:
   image:
     repository: mapproxinator
-    tag: v1.2.1
+    tag: "latest"
   env:
     logLevel: info
     ssl:
@@ -364,7 +363,7 @@ nginx:
       {{- end }}
 
   resources:
-    enabled: false
+    enabled: true
     value:
       limits:
         cpu: 100m
@@ -400,7 +399,7 @@ mapproxinator:
   replicaCount: 1
   image:
     repository: mapproxinator
-    tag: v1.2.1
+    tag: "latest"
   port: 80
   targetPort: 8081
   nodePort: 30002

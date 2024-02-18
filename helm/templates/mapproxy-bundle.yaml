@@ -31,8 +31,8 @@
           include (print $.Template.BasePath "/mapproxy/mapproxy-configmap.yaml") . | sha256sum }}
       {{- end }}
       {{- if $metrics.enabled }}
-      prometheus.io/port: {{ $metrics.prometheus.port | quote }}
-      prometheus.io/scrape: {{ $metrics.prometheus.scrape | quote }}
+        prometheus.io/port: {{ $metrics.prometheus.port | quote }}
+        prometheus.io/scrape: {{ $metrics.prometheus.scrape | quote }}
       {{- end }}
       {{- if .Values.podAnnotations }}
       {{- toYaml .Values.podAnnotations | nindent 8 }}
@@ -96,7 +96,7 @@
             - key: "UWSGI_INI"
               path: "uwsgi.ini"
             - key: "LOG_CONF"
-              path: "log.yaml"
+              path: "log.ini"
         {{- if $fs.internalPvc.enabled }}
         - name: sources-storage
           persistentVolumeClaim:

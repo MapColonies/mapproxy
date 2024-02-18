@@ -30,5 +30,5 @@ data:
   DB_SSL_PATH_KEY: {{ .Values.initContainer.env.ssl.KEY_FILE_LOCATION }}
   DB_SSL_PATH_CERT: {{ .Values.initContainer.env.ssl.CERT_FILE_LOCATION }}
   UWSGI_INI: {{ tpl (.Files.Get "config/mapProxyUwsgi.ini") . | quote }}
-  LOG_CONF: {{ tpl (.Files.Get "config/log.yaml") . | quote }}
+  LOG_CONF: {{ tpl (.Files.Get "config/log.ini") . | quote }}
 {{- end }}
