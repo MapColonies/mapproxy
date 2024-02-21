@@ -96,7 +96,7 @@
             - key: "UWSGI_INI"
               path: "uwsgi.ini"
             - key: "LOG_CONF"
-              path: "log.ini"
+              path: "log.yaml"
         {{- if $fs.internalPvc.enabled }}
         - name: sources-storage
           persistentVolumeClaim:

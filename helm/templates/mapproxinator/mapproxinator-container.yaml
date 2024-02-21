@@ -63,9 +63,9 @@
             - mountPath: "/mapproxy/uwsgi.ini"
               name: uwsgi-config
               subPath: uwsgi.ini
-            - mountPath: "/mapproxy/log.ini"
+            - mountPath: "/mapproxy/log.yaml"
               name: uwsgi-config
-              subPath: log.ini
+              subPath: log.yaml
             {{- if eq (upper $storage.mapproxyConfigProvider) "FS" }}
             - mountPath: /configSource/mapproxy.yaml
               name: sources-storage

@@ -151,7 +151,7 @@ mapproxy:
     socket: 3031
     httpSocket: 8080
     processes: 6
-    threads: 10
+    threads: 2
     disableLogging: true
     statsServer:
       enabled: false
