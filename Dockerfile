@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/mapproxy/mapproxy/mapproxy:2.0.1
+FROM ghcr.io/mapproxy/mapproxy/mapproxy:2.0.2
 
 
 ENV \

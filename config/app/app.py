@@ -1,9 +1,8 @@
-from logging.config import dictConfig
 from logging import getLogger
 from os import environ
 from os.path import dirname, join
 import sys
-
+from logging.config import dictConfig
 from logs import Logs
 from mapproxy.wsgiapp import make_wsgi_app
 from metrics import Metrics
