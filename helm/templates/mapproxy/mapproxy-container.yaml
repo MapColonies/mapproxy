@@ -30,7 +30,7 @@
             {{- end }}
           envFrom:
             - configMapRef:
-                name:  {{ $configmapName }}
+                name: {{ $configmapName }}
           {{- if .resources.enabled }}
           resources:
             {{- toYaml .resources.value | nindent 12 }}

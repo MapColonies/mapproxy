@@ -47,6 +47,8 @@ global:
     secretName: "root-ca"
     path: "/usr/local/share/ca-certificates"
     key: "ca.crt"
+  ingress:
+    domain: ""
   opalaEnabled: false
 
 # add pod annotations
@@ -389,6 +391,7 @@ nginx:
     enabled: false
     path: /api/raster/v1
     host: "localhost"
+    domain: ""
     tls:
       enabled: true
       useExternal: ""
