@@ -197,7 +197,6 @@ pyrightconfig.json
 
 #charts
 *.tgz
-*Chart.lock
 
 #local-values
 *local.yaml
