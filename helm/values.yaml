@@ -196,7 +196,7 @@ initContainer:
 
 nginx:
   enabled: true
-  fullnameOverride: mapproxy-test-mapproxy-nginx
+  fullnameOverride: ""
   replicaCount: 1
   image:
     repository: nginx-otel-unprivileged
