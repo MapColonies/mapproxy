@@ -50,6 +50,7 @@ global:
   ingress:
     domain: ""
   opalaEnabled: false
+  gracefulReloadMaxSeconds: 300
 
 # add pod annotations
 # example:
@@ -418,7 +419,6 @@ mapproxinator:
       KEY_FILE_LOCATION: /opt/certs/key/key.pem
       CERT_FILE_LOCATION: /opt/certs/cert/cert.pem
     logPrettyPrintEnabled: false
-    gracefulReloadMaxSeconds: 300
     responseCompressionEnabled: true
     requestPayloadLimit: 1mb
   resources:
