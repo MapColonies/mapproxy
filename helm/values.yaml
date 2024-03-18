@@ -160,6 +160,7 @@ mapproxy:
     processes: 6
     threads: 2
     disableLogging: true
+    timeoutSeconds: 8
     statsServer:
       enabled: false
       stats: 1717
